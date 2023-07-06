@@ -8,6 +8,7 @@ cli에서 yarn start 실행 시, https://github.com/vercel/next.js/blob/canary/p
 -> server/config.ts로부터 서버세팅 함수를 import하고, server/lib/start-server.ts로부터 서버start 함수를 import를 합니다.
 
 1. local 서버 config 세팅
+```javascript
 const config = await loadConfig(
     PHASE_PRODUCTION_SERVER,
     resolve(dir || '.'),
@@ -15,8 +16,10 @@ const config = await loadConfig(
     undefined,
     true
 )
+```
 
 2. local 서버 start
+```javascript
 await startServer({
     dir,
     isDev: false,
@@ -25,6 +28,7 @@ await startServer({
     keepAliveTimeout,
     useWorkers: !!config.experimental.appDir,
 })
+```
 
 원티드 프리온보딩 챌린지 7월 과제2
 
