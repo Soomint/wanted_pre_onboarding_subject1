@@ -5,6 +5,7 @@ export default function Root() {
     // useRouter hook
     const { push } = useRouter();
 
+    // 어바웃 페이지 이동버튼 클릭 함수
     const handleClick = () => {
         push("/about");
     }
