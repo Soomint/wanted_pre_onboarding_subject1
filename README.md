@@ -1,6 +1,33 @@
 # wanted_pre_onboarding_subject1
 원티드 프리온보딩 챌린지 7월 과제1
 
+Next.js 프로젝트에서 yarn start(or npm run start) 스크립트를 실행했을 때 실행되는 코드를 Next.js Github 레포지토리에서 찾은 뒤, 해당 파일에 대한 간단한 설명을 첨부해주세요.
+
+cli에서 yarn start 실행 시, https://github.com/vercel/next.js/blob/canary/packages/next/src/cli/next-start.ts 파일이 실행됩니다.
+기타 arguments에 대한 로직을 제외한 실제 핵심로직은 다음과 같습니다.
+-> server/config.ts로부터 서버세팅 함수를 import하고, server/lib/start-server.ts로부터 서버start 함수를 import를 합니다.
+
+1. local 서버 config 세팅
+const config = await loadConfig(
+    PHASE_PRODUCTION_SERVER,
+    resolve(dir || '.'),
+    undefined,
+    undefined,
+    true
+)
+
+2. local 서버 start
+await startServer({
+    dir,
+    isDev: false,
+    hostname: host,
+    port,
+    keepAliveTimeout,
+    useWorkers: !!config.experimental.appDir,
+})
+
+원티드 프리온보딩 챌린지 7월 과제2
+
 React와 History API 사용하여 SPA Router 기능 구현하기
 
 src/Router.tsx에 해당 기능을 구현하였습니다.
