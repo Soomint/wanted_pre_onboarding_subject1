@@ -1,5 +1,5 @@
 # wanted_pre_onboarding_subject1
-원티드 프리온보딩 챌린지 7월 과제1  
+##원티드 프리온보딩 챌린지 7월 과제1  
 
 Next.js 프로젝트에서 yarn start(or npm run start) 스크립트를 실행했을 때 실행되는 코드를 Next.js Github 레포지토리에서 찾은 뒤, 해당 파일에 대한 간단한 설명을 첨부해주세요.  
 
@@ -31,7 +31,7 @@ await startServer({
 ```
 
 
-원티드 프리온보딩 챌린지 7월 과제2  
+##원티드 프리온보딩 챌린지 7월 과제2  
 
 React와 History API 사용하여 SPA Router 기능 구현하기  
 
