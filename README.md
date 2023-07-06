@@ -37,6 +37,11 @@ src/Router.tsx에 해당 기능을 구현하였습니다.
 라우팅 경로인 path props를 추가하였습니다.
 
 ```javascript
+// Router Node Interface
+interface RouterProps {
+    path: string;               // 라우팅 경로
+}
+
 // Router Context
 const RouterContext = createContext<RouterProps>({
     path: "/",
@@ -49,10 +54,6 @@ useEffect로 첫 렌더링 시 popstate 이벤트를 추가하였습니다.
 반환값은 Context.provider로 value를 통해 하위 컴포넌트와 같이 사용할 Context객체를 선언하였습니다.
 
 ```javascript
-// Router Node Interface
-interface RouterProps {
-    path: string;               // 라우팅 경로
-}
 // Router Node 정의
 const Router = ({ children }: { children: React.ReactNode }) => {
     const [path, setPath] = useState(location.pathname);
