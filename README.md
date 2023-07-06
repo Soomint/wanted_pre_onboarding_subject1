@@ -35,14 +35,25 @@ src/Router.tsx에 해당 기능을 구현하였습니다.
 1. Router관련 Context 정의
 컴포넌트 간 데이터를 전달할 때, props가 아닌 다른 방법으로 사용할 객체를 만들었습니다.
 라우팅 경로인 path props를 추가하였습니다.
+
+```javascript
+// Router Context
 const RouterContext = createContext<RouterProps>({
     path: "/",
 });
+```
 
 2. Router Node 정의
 라우팅 경로를 상태관리 하기 위해 useState를 사용하였고, 기본값을 location.pathname 으로 세팅하였습니다.
 useEffect로 첫 렌더링 시 popstate 이벤트를 추가하였습니다.
 반환값은 Context.provider로 value를 통해 하위 컴포넌트와 같이 사용할 Context객체를 선언하였습니다.
+
+```javascript
+// Router Node Interface
+interface RouterProps {
+    path: string;               // 라우팅 경로
+}
+// Router Node 정의
 const Router = ({ children }: { children: React.ReactNode }) => {
     const [path, setPath] = useState(location.pathname);
 
@@ -62,20 +73,39 @@ const Router = ({ children }: { children: React.ReactNode }) => {
         </>
     );
 };
+```
 
 3. Route Node 정의
 Interface로 화면에서 받은 props들을 세팅하였습니다. (path, component)
 각 Route Node에 라우팅 경로마다 정의된 path와 component를 세팅하면
 화면에서 현재 라우팅 경로와 path props를 비교하여, 동일하면 해당 component를, 아니면 null을 반환하도록 구현하였습니다.
+
+```javascript
+// Route Interface
+interface RouteProps {
+    path: string;               // url경로
+    component: React.ReactNode; // component
+}
+
+// Route Node 정의
 const Route = ({ path, component }: RouteProps) => {
     const { path: contextPath } = useContext(RouterContext);
     return path === contextPath ? component : null;
 };
+```
 
 4. useRouter Hook 정의
 특정 라우팅 경로를 요청할 때, 해당 컴포넌트가 렌더링 처리되도록 도와주는 Hook을 추가하였습니다. (push)
 파라미터로 변경요청 url를 담아서 호출하면, history API를 사용(pushState)하여 history관리를 하였습니다.
 그리고 popstate 이벤트도 추가하였습니다.
+
+```javascript
+// useRouter Hooks Interface
+interface UseRouterProps {
+    push(url: string): void;    // url이동
+}
+
+// useRouter Hooks
 const useRouter = () => {
     const router: UseRouterProps = {
         // push 요청 시, 기존에 저장된 path를 수정한다.
@@ -88,6 +118,7 @@ const useRouter = () => {
 
     return router;
 };
+```
 
 Conclusion
 기존에는 라이브러리를 활용하여 사용하다가 해당기능을 직접 구현하다보니 처음에는 어떻게 구현해야할지 막막했지만,
