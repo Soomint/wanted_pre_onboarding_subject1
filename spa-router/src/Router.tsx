@@ -1,29 +1,29 @@
-import { useState, createContext, useContext } from "react";
+import { useState, createContext, useContext, useEffect } from "react";
 
 // Router Node Interface
 interface RouterProps {
-    path: string;                   // 현재경로
-    goPath: (url: string) => void;  // 경로이동함수
+    path: string;
 }
 
 // Router Context
 const RouterContext = createContext<RouterProps>({
     path: "/",
-    goPath: () => null,
 });
 
 // Router Node 정의
 const Router = ({ children }: { children: React.ReactNode }) => {
     const [path, setPath] = useState(location.pathname);
 
-    const goPath = (path: string) => {
-        history.pushState(null, "", path);
-        setPath(path);
-    }
+    useEffect(() => {
+        const handlePopstate = () => {
+            setPath(location.pathname);
+        };
+        addEventListener('popstate', handlePopstate);
+    }, []);
 
     return (
         <>
-            <RouterContext.Provider value={{ path, goPath }}>
+            <RouterContext.Provider value={{ path }}>
                 {children}
             </RouterContext.Provider>
         </>
@@ -49,13 +49,11 @@ interface UseRouterProps {
 
 // useRouter Hooks
 const useRouter = () => {
-    // url 경로 변경함수를 가져온다.
-    const { goPath } = useContext(RouterContext);
-
     const router: UseRouterProps = {
         // push 요청 시, 기존에 저장된 path를 수정한다.
         push(url) {
-            goPath(url);
+            history.pushState(null, "", url);
+            dispatchEvent(new PopStateEvent('popstate'));
         },
     };
 
